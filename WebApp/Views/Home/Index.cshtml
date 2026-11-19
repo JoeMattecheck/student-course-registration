@@ -1,0 +1,106 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container mt-5 text-center">
+
+    <h1>Student Course Registration System</h1>
+
+    <p class="lead">
+        Welcome to the Student Course Registration System.
+    </p>
+
+    <hr class="my-4" />
+
+    @if (User.Identity != null && User.Identity.IsAuthenticated)
+    {
+        @if (User.IsInRole("Admin"))
+        {
+            <h3>Administrator Dashboard</h3>
+
+            <p>Manage students, courses, and enrollment requests.</p>
+
+            <div class="mt-4">
+                <a asp-controller="Student"
+                   asp-action="Index"
+                   class="btn btn-primary btn-lg d-block mb-2">
+                    Manage Students
+                </a>
+            </div>
+
+            <div class="mt-4">
+                <a asp-controller="Course"
+                   asp-action="Index"
+                   class="btn btn-primary btn-lg d-block mb-2">
+                    Manage Courses
+                </a>
+            </div>
+
+            <div class="mt-4">
+                <a asp-controller="Enrollment"
+                   asp-action="AdminIndex"
+                   class="btn btn-primary btn-lg d-block mb-2">
+                    Enrollment Requests
+                </a>
+            </div>
+        }
+        else if (User.IsInRole("Student"))
+        {
+            <h3>Student Dashboard</h3>
+
+            <p>Browse courses and manage your registrations.</p>
+
+            <div class="mt-4">
+                <a asp-controller="Enrollment"
+                   asp-action="Create"
+                   class="btn btn-primary btn-lg d-block mb-2">
+                    Browse Available Courses
+                </a>
+            </div>
+
+            <div class="mt-4">
+                <a asp-controller="Enrollment"
+                   asp-action="Index"
+                   class="btn btn-success btn-lg d-block mb-2">
+                    My Enrollments
+                </a>
+            </div>
+
+            <div class="mt-4">
+                <a asp-controller="CompletedCourse"
+                   asp-action="MyCourses"
+                   class="btn btn-success btn-lg d-block mb-2">
+                    My Completed Courses
+                </a>
+            </div>
+        }
+        else
+        {
+            <p>Your account does not have an assigned application role.</p>
+        }
+    }
+    else
+    {
+        <h3>Get Started</h3>
+
+        <p>Sign in or create an account to register for courses.</p>
+
+        <div class="mt-4">
+            <a asp-area="Identity"
+               asp-page="/Account/Login"
+               class="btn btn-primary btn-lg d-block mb-2">
+                Sign In
+            </a>
+
+            <a asp-area="Identity"
+               asp-page="/Account/Register"
+               class="btn btn-success btn-lg d-block mb-2">
+                Register
+            </a>
+        </div>
+    }
+
+</div>
+
+
+

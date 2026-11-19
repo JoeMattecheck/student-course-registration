@@ -1,0 +1,103 @@
+﻿@model IEnumerable<WebApp.Models.Course>
+
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<h1>Courses</h1>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">
+        Create New Course
+    </a>
+</p>
+
+<!-- Course Search -->
+<div class="mb-3">
+    <input type="text"
+           id="courseSearch"
+           class="form-control"
+           placeholder="Search by course number or name..." />
+
+    <small class="text-muted">
+        Search courses as you type.
+    </small>
+</div>
+
+<table class="table table-hover-highlight">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewBag.CourseNumberSortParm"
+                   asp-route-searchString="@ViewBag.CurrentFilter">
+                    Course Number
+                </a>
+            </th>
+
+            <th>
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewBag.CourseNameSortParm"
+                   asp-route-searchString="@ViewBag.CurrentFilter">
+                    Course Name
+                </a>
+            </th>
+
+            <th>
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewBag.SemesterSortParm"
+                   asp-route-searchString="@ViewBag.CurrentFilter">
+                    Semester
+                </a>
+            </th>
+
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody id="courseTable">
+        @foreach (var item in Model)
+        {
+            <tr class="course-item">
+                <td>@item.CourseNumber</td>
+                <td>@item.CourseName</td>
+                <td>
+                    @item.Semester.SemesterName (@item.Semester.Year)
+                </td>
+
+                <td>
+                    <a asp-action="Details"
+                       asp-route-id="@item.CourseID"
+                       class="btn btn-primary">
+                        Details
+                    </a>
+
+                    <a asp-action="Edit"
+                       asp-route-id="@item.CourseID"
+                       class="btn btn-primary">
+                        Edit
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@item.CourseID"
+                       class="btn btn-primary">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="Home"
+   asp-action="Index"
+   class="btn btn-primary mt-3">
+    Back to Home
+</a>

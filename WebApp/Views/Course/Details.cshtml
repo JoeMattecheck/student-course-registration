@@ -1,0 +1,69 @@
+﻿@model WebApp.Models.Course
+
+@{
+    ViewData["Title"] = "Course Details";
+}
+
+<h1>Course Details</h1>
+
+<div>
+    <dl class="row">
+
+        <dt class="col-sm-2 detail-label">Course ID</dt>
+        <dd class="col-sm-10">@Model.CourseID</dd>
+
+        <dt class="col-sm-2 detail-label">Course Number</dt>
+        <dd class="col-sm-10">@Model.CourseNumber</dd>
+
+        <dt class="col-sm-2 detail-label">Course Name</dt>
+        <dd class="col-sm-10">@Model.CourseName</dd>
+
+        <dt class="col-sm-2 detail-label">Semester</dt>
+        <dd class="col-sm-10">
+            @Model.Semester.SemesterName (@Model.Semester.Year)
+        </dd>
+
+    </dl>
+</div>
+
+<hr />
+
+<h4>Prerequisites</h4>
+
+@if (Model.Prerequisites.Any())
+{
+    <ul>
+        @foreach (var prerequisite in Model.Prerequisites)
+        {
+            <li>
+                @prerequisite.PrerequisiteCourse.CourseNumber -
+                @prerequisite.PrerequisiteCourse.CourseName
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>This course has no prerequisites.</p>
+}
+
+<hr />
+
+<div class="d-flex flex-wrap gap-2">
+    <a asp-action="Edit"
+       asp-route-id="@Model.CourseID"
+       class="btn btn-primary">
+        Edit
+    </a>
+
+    <a asp-action="ManagePrerequisites"
+       asp-route-id="@Model.CourseID"
+       class="btn btn-primary">
+        Manage Prerequisites
+    </a>
+
+    <a asp-action="Index"
+       class="btn btn-primary">
+        Back to List
+    </a>
+</div>

@@ -1,0 +1,107 @@
+﻿@model IEnumerable<WebApp.Models.CompletedCourse>
+
+@{
+    ViewData["Title"] = "Completed Courses";
+    var student = ViewBag.Student as WebApp.Models.Student;
+}
+
+<h1>Completed Courses</h1>
+
+<h4>@student.FirstName @student.LastName</h4>
+
+<hr />
+
+<div class="mb-3">
+    <a asp-controller="CompletedCourse"
+       asp-action="Create"
+       asp-route-studentId="@student.StudentID"
+       class="btn btn-success">
+        Add Completed Course
+    </a>
+</div>
+
+@if (!Model.Any())
+{
+    <p>This student has not completed any courses matching your search.</p>
+}
+else
+{
+    <table class="table table-hover-highlight">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-action="Index"
+                       asp-route-studentId="@student.StudentID"
+                       asp-route-searchString="@ViewBag.CurrentFilter"
+                       asp-route-sortOrder="@ViewBag.IdSortParm">
+                        Course ID
+                    </a>
+                </th>
+
+                <th>
+                    <a asp-action="Index"
+                       asp-route-studentId="@student.StudentID"
+                       asp-route-searchString="@ViewBag.CurrentFilter"
+                       asp-route-sortOrder="@ViewBag.NameSortParm">
+                        Course Name
+                    </a>
+                </th>
+
+                <th>Course Number</th>
+
+                <th>
+                    <a asp-action="Index"
+                       asp-route-studentId="@student.StudentID"
+                       asp-route-searchString="@ViewBag.CurrentFilter"
+                       asp-route-sortOrder="@ViewBag.SemesterSortParm">
+                        Semester
+                    </a>
+                </th>
+
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var completedCourse in Model)
+            {
+                <tr>
+                    <td>@completedCourse.Course.CourseID</td>
+
+                    <td>@completedCourse.Course.CourseName</td>
+
+                    <td>@completedCourse.Course.CourseNumber</td>
+
+                    <td>
+                        @completedCourse.Course.Semester.SemesterName
+                        @completedCourse.Course.Semester.Year
+                    </td>
+
+                    <td>
+                        <form asp-action="Delete" method="post">
+                            <input type="hidden"
+                                   name="id"
+                                   value="@completedCourse.CompletedCourseID" />
+
+                            <input type="hidden"
+                                   name="studentId"
+                                   value="@completedCourse.StudentID" />
+
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm">
+                                Remove
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<a asp-controller="Student"
+   asp-action="Details"
+   asp-route-id="@student.StudentID"
+   class="btn btn-secondary mt-3">
+    Back to Student Details
+</a>
+

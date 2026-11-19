@@ -1,0 +1,97 @@
+﻿@model IEnumerable<WebApp.Models.Enrollment>
+
+@{
+    ViewData["Title"] = "Enrollment Requests";
+}
+
+<h1>Enrollment Requests</h1>
+
+<hr />
+
+@if (!Model.Any())
+{
+    <p>There are no enrollment requests.</p>
+}
+else
+{
+    <table class="table table-hover-highlight">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Course Number</th>
+                <th>Course Name</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var enrollment in Model)
+            {
+                <tr>
+                    <td>
+                        @enrollment.Student.FirstName
+                        @enrollment.Student.LastName
+                    </td>
+                    <td>@enrollment.Course.CourseNumber</td>
+                    <td>@enrollment.Course.CourseName</td>
+                    <td>@enrollment.Status</td>
+                    <td>
+                        @if (enrollment.Status != "Approved")
+                        {
+                            <form asp-action="UpdateStatus"
+                                  method="post"
+                                  class="d-inline">
+                                <input type="hidden" name="id"
+                                       value="@enrollment.EnrollmentID" />
+                                <input type="hidden" name="studentId"
+                                       value="@enrollment.StudentID" />
+                                <input type="hidden" name="status"
+                                       value="Approved" />
+                                <button type="submit"
+                                        class="btn btn-success btn-sm">
+                                    Approve
+                                </button>
+                            </form>
+                        }
+
+                        @if (enrollment.Status != "Rejected")
+                        {
+                            <form asp-action="UpdateStatus"
+                                  method="post"
+                                  class="d-inline">
+                                <input type="hidden" name="id"
+                                       value="@enrollment.EnrollmentID" />
+                                <input type="hidden" name="studentId"
+                                       value="@enrollment.StudentID" />
+                                <input type="hidden" name="status"
+                                       value="Rejected" />
+                                <button type="submit"
+                                        class="btn btn-warning btn-sm">
+                                    Reject
+                                </button>
+                            </form>
+                        }
+
+                        <form asp-action="Delete"
+                              method="post"
+                              class="d-inline">
+                            <input type="hidden" name="id"
+                                   value="@enrollment.EnrollmentID" />
+                            <input type="hidden" name="studentId"
+                                   value="@enrollment.StudentID" />
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<a asp-controller="Home"
+   asp-action="Index"
+   class="btn btn-secondary mt-3">
+    Back to Home
+</a>

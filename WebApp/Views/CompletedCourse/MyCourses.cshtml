@@ -1,0 +1,51 @@
+﻿@model IEnumerable<WebApp.Models.CompletedCourse>
+
+@{
+    ViewData["Title"] = "My Completed Courses";
+    var student = ViewBag.Student as WebApp.Models.Student;
+}
+
+<h1>My Completed Courses</h1>
+
+<h4>@student?.FirstName @student?.LastName</h4>
+
+<hr />
+
+@if (!Model.Any())
+{
+    <p>You have not completed any courses.</p>
+}
+else
+{
+    <table class="table table-hover-highlight">
+        <thead>
+            <tr>
+                <th>Course ID</th>
+                <th>Course Name</th>
+                <th>Course Number</th>
+                <th>Semester</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var completedCourse in Model)
+            {
+                <tr>
+                    <td>@completedCourse.CourseID</td>
+                    <td>@completedCourse.Course?.CourseName</td>
+                    <td>@completedCourse.Course?.CourseNumber</td>
+                    <td>
+                        @if (completedCourse.Course?.Semester != null)
+                        {
+                            @completedCourse.Course.Semester.SemesterName
+                            @completedCourse.Course.Semester.Year
+                        }
+                        else
+                        {
+                            <span>Not assigned</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

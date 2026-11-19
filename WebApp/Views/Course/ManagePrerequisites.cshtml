@@ -1,0 +1,83 @@
+﻿@model WebApp.Models.Course
+
+@{
+    ViewData["Title"] = "Manage Prerequisites";
+}
+
+<h1>Manage Prerequisites</h1>
+
+<h4>@Model.CourseNumber - @Model.CourseName</h4>
+
+<hr />
+
+<h5>Current Prerequisites</h5>
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (Model.Prerequisites.Any())
+{
+    <ul class="list-group mb-3">
+        @foreach (var prerequisite in Model.Prerequisites)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>
+                    @prerequisite.PrerequisiteCourse.CourseNumber -
+                    @prerequisite.PrerequisiteCourse.CourseName
+                </span>
+
+                <form asp-action="RemovePrerequisite" method="post">
+                    <input type="hidden" name="courseId"
+                           value="@Model.CourseID" />
+
+                    <input type="hidden" name="prerequisiteCourseId"
+                           value="@prerequisite.PrerequisiteCourseID" />
+
+                    <button type="submit" class="btn btn-danger btn-sm">
+                        Remove
+                    </button>
+                </form>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>This course does not have any prerequisites.</p>
+}
+
+<hr />
+
+<h5>Add a Prerequisite</h5>
+
+<form asp-action="AddPrerequisite" method="post">
+    <input type="hidden" name="courseId" value="@Model.CourseID" />
+
+    <div class="form-group mb-3">
+        <label class="control-label">Select Prerequisite</label>
+
+        <select name="prerequisiteCourseId"
+                class="form-select"
+                asp-items="ViewBag.AvailableCourses">
+            <option value="">-- Select a Course --</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Add Prerequisite
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Back to Courses
+    </a>
+</form>

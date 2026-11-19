@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Add Completed Course";
+    var student = ViewBag.Student as WebApp.Models.Student;
+}
+
+<h1>Add Completed Course</h1>
+
+<h4>@student.FirstName @student.LastName</h4>
+
+<hr />
+
+@if (ViewBag.CourseID != null &&
+     ((Microsoft.AspNetCore.Mvc.Rendering.SelectList)ViewBag.CourseID).Any())
+{
+    <form asp-action="Create" method="post">
+
+        <input type="hidden" name="studentId"
+               value="@student.StudentID" />
+
+        <div class="form-group mb-3">
+            <label class="control-label">Select Course</label>
+
+            <select name="courseId"
+                    class="form-select"
+                    asp-items="ViewBag.CourseID">
+                <option value="">-- Select a Course --</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Confirm Completed Course
+        </button>
+
+        <a asp-action="Index"
+           asp-route-studentId="@student.StudentID"
+           class="btn btn-secondary">
+            Cancel
+        </a>
+
+    </form>
+}
+else
+{
+    <div class="alert alert-info">
+        This student has no approved courses available to mark as completed.
+    </div>
+
+    <a asp-action="Index"
+       asp-route-studentId="@student.StudentID"
+       class="btn btn-secondary">
+        Back to Completed Courses
+    </a>
+}
+

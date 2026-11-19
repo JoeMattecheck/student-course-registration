@@ -1,0 +1,240 @@
+﻿
+/* Global theme */
+:root {
+    --primary-color: #1e3a5f;
+    --secondary-color: #2f6da3;
+    --background-color: #f4f6fa;
+    --card-background: #ffffff;
+    --text-color: #263445;
+}
+
+/* Page background */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Main headings */
+h1, h2, h3 {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 12px;
+    background-color: var(--card-background);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
+    }
+
+/* Buttons */
+
+/* Consistent button appearance */
+.btn,
+button {
+    background-color: #1e3a5f !important;
+    border: 1px solid #1e3a5f !important;
+    color: #ffffff !important;
+    border-radius: 7px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+    /* Button hover */
+    .btn:hover,
+    button:hover {
+        background-color: #2f6da3 !important;
+        border-color: #2f6da3 !important;
+        color: #ffffff !important;
+    }
+/* Make all button text white */
+.btn,
+.btn:link,
+.btn:visited,
+.btn:hover,
+.btn:focus,
+.btn:active {
+    color: #ffffff !important;
+}
+/* General button spacing */
+.btn {
+    margin: 6px;
+    padding: 10px 18px;
+    display: inline-block;
+}
+
+/* Buttons inside tables */
+.table td .btn {
+    margin: 5px 4px;
+    padding: 8px 14px;
+    white-space: nowrap;
+}
+
+/* Give table cells more room */
+.table td {
+    padding: 12px 10px;
+    vertical-align: middle;
+}
+
+    /* Separate multiple buttons in the same table cell */
+    .table td .btn + .btn {
+        margin-left: 8px;
+    }
+
+/* Form inputs */
+.form-control, .form-select {
+    border-radius: 7px;
+    padding: 10px;
+}
+
+    .form-control:focus, .form-select:focus {
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 0.2rem rgba(47, 109, 163, 0.15);
+    }
+
+/* Tables */
+/* Consistent table formatting */
+.table {
+    width: 100%;
+    font-size: 0.95rem;
+    color: #263445;
+    vertical-align: middle;
+}
+
+    /* Table headers */
+    .table thead th {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #1e3a5f;
+        text-align: left;
+        padding: 12px;
+    }
+
+    /* Table body text */
+    .table tbody td {
+        font-size: 0.95rem;
+        font-weight: 400;
+        color: #263445;
+        padding: 12px;
+        vertical-align: middle;
+    }
+
+    /* Consistent table links */
+    .table a {
+        font-size: inherit;
+        font-weight: 600;
+    }
+
+/* Main navigation */
+.portal-navbar {
+    background-color: #1e3a5f;
+    padding: 14px 0;
+}
+
+    .portal-navbar .navbar-brand {
+        font-size: 1.4rem;
+        letter-spacing: 0.5px;
+    }
+
+    .portal-navbar .nav-link {
+        color: #dce6f1;
+        margin-left: 8px;
+        transition: color 0.2s ease;
+    }
+
+        .portal-navbar .nav-link:hover {
+            color: #ffffff;
+        }
+
+    .portal-navbar .navbar-brand:hover {
+        color: #c9def5;
+    }
+/* Force consistent table heading appearance */
+.table thead th,
+.table thead th a,
+.table thead th a:link,
+.table thead th a:visited,
+.table thead th a:hover,
+.table thead th a:active {
+    color: #1e3a5f !important;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* Consistent table heading background */
+.table thead th {
+    background-color: #e9eef5 !important;
+    padding: 12px;
+}
+
+/* Main content */
+body {
+    background-color: #f4f6fa;
+    min-height: 100vh;
+}
+
+main {
+    min-height: 65vh;
+}
+
+/* Footer */
+.portal-footer {
+    background-color: #1e3a5f;
+    color: #dce6f1;
+}
+
+/* General buttons */
+.btn {
+    border-radius: 7px;
+    transition: all 0.2s ease;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Normal links */
+a:link {
+    color: #0d6efd;
+    text-decoration: none;
+}
+
+/* Links after they have been visited */
+a:visited {
+    color: #0d6efd;
+    text-decoration: none;
+}
+
+/* When hovering over links */
+a:hover {
+    color: #0a58ca;
+    text-decoration: underline;
+}
+
+/* While clicking a link */
+a:active {
+    color: #0d6efd;
+}
+/* Details page field labels */
+.detail-label {
+    font-weight: bold;
+}
+table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+    table tbody tr:hover {
+        background-color: #e2ecf7;
+    }

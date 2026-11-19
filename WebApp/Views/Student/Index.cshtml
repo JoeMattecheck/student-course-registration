@@ -1,0 +1,71 @@
+﻿@model IEnumerable<WebApp.Models.Student>
+
+@{
+    ViewData["Title"] = "Students";
+}
+
+<h1>Students</h1>
+
+<!-- Student Search -->
+<div class="mb-3">
+    <input type="text"
+           id="studentSearch"
+           class="form-control"
+           placeholder="Search by student ID, name, email, or username..." />
+
+    <small class="text-muted">
+        Search students as you type.
+    </small>
+</div>
+
+<table class="table table-hover-highlight">
+    <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr class="student-item">
+                <td>@student.StudentID</td>
+                <td>@student.FirstName</td>
+                <td>@student.LastName</td>
+                <td>@student.Email</td>
+                <td>@student.UserName</td>
+
+                <td>
+                    <a asp-action="Details"
+                       asp-route-id="@student.StudentID"
+                       class="btn btn-info btn-sm">
+                        Details
+                    </a>
+
+                    <a asp-action="Edit"
+                       asp-route-id="@student.StudentID"
+                       class="btn btn-warning btn-sm">
+                        Edit
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@student.StudentID"
+                       class="btn btn-danger btn-sm">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="Home"
+   asp-action="Index"
+   class="btn btn-secondary mt-3">
+    Back to Home
+</a>

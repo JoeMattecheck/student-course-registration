@@ -1,0 +1,142 @@
+﻿@model IEnumerable<WebApp.Models.Course>
+
+@{
+    ViewData["Title"] = "Available Courses";
+    var student = ViewBag.Student as WebApp.Models.Student;
+    var currentFilter = ViewBag.CurrentFilter as string;
+    var sortOrder = ViewBag.SortOrder as string;
+}
+
+<h1>Available Courses</h1>
+
+<h4>@student.FirstName @student.LastName</h4>
+
+<hr />
+
+<!-- Course Search -->
+<div class="mb-3">
+    <input type="text"
+           id="availableCourseSearch"
+           class="form-control"
+           placeholder="Search by course number, name, or semester..." />
+
+    <small class="text-muted">
+        Search available courses as you type.
+    </small>
+</div>
+
+<!-- Sorting Options -->
+<div class="mb-3">
+    <strong>Sort by:</strong>
+
+    <a asp-action="Create"
+       asp-route-searchString="@currentFilter"
+       asp-route-sortOrder="name"
+       class="btn btn-outline-primary btn-sm">
+        Course Name
+    </a>
+
+    <a asp-action="Create"
+       asp-route-searchString="@currentFilter"
+       asp-route-sortOrder="number"
+       class="btn btn-outline-primary btn-sm">
+        Course Number
+    </a>
+
+    <a asp-action="Create"
+       asp-route-searchString="@currentFilter"
+       asp-route-sortOrder="semester"
+       class="btn btn-outline-primary btn-sm">
+        Semester
+    </a>
+</div>
+
+<!-- Available Courses -->
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        No courses found.
+    </div>
+}
+else if (sortOrder == "name" || sortOrder == "number")
+{
+    var sortedCourses = sortOrder == "name"
+        ? Model.OrderBy(c => c.CourseName)
+        : Model.OrderBy(c => c.CourseNumber);
+
+    @foreach (var course in sortedCourses)
+    {
+        <div class="card mb-3 available-course-item">
+            <div class="card-body">
+
+                <h5 class="card-title">
+                    @course.CourseNumber - @course.CourseName
+                </h5>
+
+                <small class="text-muted">
+                    @course.Semester.SemesterName @course.Semester.Year
+                </small>
+
+                <form asp-action="Create" method="post">
+                    <input type="hidden"
+                           name="courseId"
+                           value="@course.CourseID" />
+
+                    <button type="submit" class="btn btn-primary">
+                        Request Enrollment
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    }
+}
+else
+{
+    @foreach (var group in Model
+        .GroupBy(c => new { c.Semester.SemesterName, c.Semester.Year }))
+    {
+        <div class="semester-group">
+
+            <h3 class="mt-4">
+                @group.Key.SemesterName @group.Key.Year
+            </h3>
+
+            @foreach (var course in group)
+            {
+                <div class="card mb-3 available-course-item">
+                    <div class="card-body">
+
+                        <h5 class="card-title">
+                            @course.CourseNumber - @course.CourseName
+                        </h5>
+
+                        <form asp-action="Create" method="post">
+                            <input type="hidden"
+                                   name="courseId"
+                                   value="@course.CourseID" />
+
+                            <button type="submit" class="btn btn-primary">
+                                Request Enrollment
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+}
+
+<a asp-action="Index" class="btn btn-secondary">
+    My Enrollments
+</a>
+
+<a asp-controller="Home"
+   asp-action="Index"
+   class="btn btn-secondary mt-3">
+    Back to Home
+</a>
+
+

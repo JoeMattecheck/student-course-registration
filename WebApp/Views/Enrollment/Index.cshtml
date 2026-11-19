@@ -1,0 +1,69 @@
+﻿@model IEnumerable<WebApp.Models.Enrollment>
+
+@{
+    ViewData["Title"] = "My Enrollments";
+    var student = ViewBag.Student as WebApp.Models.Student;
+}
+
+<h1>My Enrollments</h1>
+
+<h4>@student.FirstName @student.LastName</h4>
+
+<hr />
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        You are not currently enrolled in any courses.
+    </div>
+}
+else
+{
+    @foreach (var enrollment in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-body d-flex justify-content-between align-items-center">
+
+                <div>
+                    <h5 class="card-title mb-1">
+                        @enrollment.Course.CourseNumber -
+                        @enrollment.Course.CourseName
+                    </h5>
+
+                    <p class="card-text mb-0">
+                        Status: @enrollment.Status
+                    </p>
+                </div>
+
+                <form asp-action="Drop" method="post" class="ms-3">
+                    <input type="hidden"
+                           name="id"
+                           value="@enrollment.EnrollmentID" />
+
+                    <button type="submit"
+                            class="btn btn-danger"
+                            onclick="return confirm('Are you sure you want to drop this course?');">
+                        Drop Class
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    }
+}
+
+<a asp-action="Create" class="btn btn-primary">
+    Browse Available Courses
+</a>
+<a asp-controller="Home"
+   asp-action="Index"
+   class="btn btn-secondary mt-3">
+    Back to Home
+</a>
